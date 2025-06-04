@@ -1,7 +1,7 @@
 import { FaEyeDropper } from "react-icons/fa6"
 import { GiPin } from "react-icons/gi"
 import { IoMdColorFill } from "react-icons/io"
-import AutoResizeTextarea from "./autoResizeTextarea.jsx"
+import AutoResizeTextarea from "./AutoResizeTextarea.jsx"
 import { useState } from "react"
 
 export default function Todo(props) {
