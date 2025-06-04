@@ -1,6 +1,6 @@
 # Sticky Notes App – React.js + Tailwind CSS
-A clean and responsive sticky notes app built with React and Tailwind CSS. Create, customize, and manage your notes easily — all stored locally in your browser.
-Live Demo: sticky-notes-app-alpha.vercel.app
+- A clean and responsive sticky notes app built with React and Tailwind CSS. Create, customize, and manage your notes easily — all stored locally in your browser.
+- Live Demo: sticky-notes-app-alpha.vercel.app
 
 ### Features
 - 📝 Create Notes – Add as many sticky notes as you need.
