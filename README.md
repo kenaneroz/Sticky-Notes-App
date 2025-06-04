@@ -1,12 +1,12 @@
-# React + Vite
+# Sticky Notes App – React.js + Tailwind CSS
+A clean and responsive sticky notes app built with React and Tailwind CSS. Create, customize, and manage your notes easily — all stored locally in your browser.
+Live Demo: sticky-notes-app-alpha.vercel.app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Features
+- 📝 Create Notes – Add as many sticky notes as you need.
+- 📌 Pin Notes – Pin a note to move it to the top. Each note has a pin button in its corner.
+- 🌗 Dark & Light Mode – Seamlessly switch between dark and light themes.
+- 🎨 Change Note Color – Select one or more notes, then choose a color to update their background.
+- ❌ Delete Notes – Select one or more notes and click the remove button to delete them.
+- 💾 Local Storage Support – Your notes are automatically saved in your browser, so they persist even after refreshing or closing the tab.
+- 🔀 Responsive & Minimal UI – Clean design and smooth interactions.
