@@ -20,7 +20,12 @@ export default function Sidebar(props) {
             <div className="bg-gray-600 flex md:flex-col items-center gap-[15px] rounded-full p-[15px]">
                 <button 
                     className="cursor-pointer bg-gray-500 text-gray-100 h-[50px] min-w-[50px] text-3xl font-light rounded-[100px]" 
-                    onClick={props.newTodo}
+                    onClick={() => {
+                        props.setRightBarShow(prev => !prev)
+                        props.setRightBarTitle('Title')
+                        props.setRightBarContent('Content')
+                        props.setUpdatingCreating('creating')
+                    }}
                 >+</button>
                 <div className="flex md:flex-col items-center gap-[10px]">{colorPalettes}</div>
             </div>
@@ -37,10 +42,6 @@ export default function Sidebar(props) {
                     />
                 </div>
                 <div>
-                    <p 
-                        className={`cursor-pointer ${props.mode === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}
-                        onClick={props.handleDelete}
-                    >Remove</p>
                     <p 
                         className={`cursor-pointer ${props.mode === 'dark' ? 'text-gray-100' : 'text-gray-600'}`}
                         onClick={props.handleDeleteAll}

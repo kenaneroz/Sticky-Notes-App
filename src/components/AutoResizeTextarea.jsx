@@ -15,7 +15,6 @@ export default function AutoResizeTextarea(props) {
       ref={textareaRef}
       value={props.value}
       rows="1"
-      onChange={props.onChange}
       className={props.className}
     />
   )

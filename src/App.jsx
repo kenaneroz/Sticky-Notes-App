@@ -3,6 +3,7 @@ import './App.css'
 import Sidebar from './components/Sidebar.jsx'
 import { nanoid } from 'nanoid'
 import Todo from './components/Todo.jsx'
+import RightBar from './components/RightBar.jsx'
 
 function App() {
   const savedTodos = JSON.parse(localStorage.getItem('savedTodos'))
@@ -13,7 +14,7 @@ function App() {
     localStorage.setItem('savedTodos', JSON.stringify(todos))
   }, [todos])
    
-  function newTodo(e) {
+  function newTodo(e, title, content) {
     const date = new Date
     const day = String(date.getDate()).padStart(2, '0')
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -23,8 +24,8 @@ function App() {
     
     const todo = {
       id: nanoid(),
-      title: 'Title',
-      content: 'Content',
+      title: title,
+      content: content,
       date: formattedDate,
       isPinned: false,
       bgColor: bg,
@@ -33,12 +34,10 @@ function App() {
     setTodos(prev => [...prev, todo])
   }
 
-  function updateTitle(e, id) {
-    setTodos(olds => olds.map(old => old.id === id ? {...old, title: e.target.value} : old))
-  }
+  const [updatingCreating, setUpdatingCreating] = useState('')
 
-  function updateContent(e, id) {
-    setTodos(olds => olds.map(old => old.id === id ? {...old, content: e.target.value} : old))
+  function update() {
+    setTodos(olds => olds.map(old => old.id === selected ? {...old, title: rightBarTitle, content: rightBarContent} : old))
   }
 
   function pin(id) {
@@ -55,19 +54,38 @@ function App() {
     setTodos([])
   }
 
+
+  const [selected, setSelected] = useState('')
   function handleSelect(id) {
-    setTodos(todos => todos.map(todo => todo.id === id ? {...todo, isSelected: !todo.isSelected} : todo))
+    setSelected(id)
+    todos.map(todo => {
+      if(todo.id === id) {
+        setRightBarTitle(todo.title)
+        setRightBarContent(todo.content)
+      }
+    })
+    setUpdatingCreating('editing')
+    setRightBarShow(prev => {
+      const showing = !prev
+      setSelected(showing ? id : '')
+      return showing
+    })
   }
 
+
+
   function handleTodoBgChange(newBg) {
-    setTodos(todos => todos.map(todo => todo.isSelected ? {...todo, bgColor: newBg} : todo))
+    setTodos(todos => todos.map(todo => todo.id === selected ? {...todo, bgColor: newBg} : todo))
   }
 
   function handleDelete() {
-    setTodos(todos => todos.filter(todo => !todo.isSelected))
+    setTodos(todos => todos.filter(todo => todo.id !== selected))
   }
   function handleDeleteAll() {
     setTodos([])
+  }
+  function deleteSelected() {
+    setTodos(todos => todos.filter(todo => !todo.isSelected))
   }
 
   const stickyNoteElements = todos.map(todo => {
@@ -75,10 +93,9 @@ function App() {
       key={todo.id}
       todo={todo} 
       pin={pin} 
-      updateTitle={updateTitle} 
-      updateContent={updateContent} 
       handleDelete={handleDelete} 
       handleSelect={handleSelect}
+      selected={selected}
     />  
   })
 
@@ -88,7 +105,16 @@ function App() {
     else setMode('light')
   }
   
+  const [rightBarShow, setRightBarShow] = useState(false)
+  const [rightBarTitle, setRightBarTitle] = useState('Title')
+  const [rightBarContent, setRightBarContent] = useState('Content')
 
+  useEffect(() => {
+    if(!rightBarShow) setSelected('')
+  }, [rightBarShow])
+  useEffect(() => {
+    setTodos(todos => todos.map(todo => todo.id === selected ? {...todo, isSelected: true} : {...todo, isSelected: false}))
+  }, [selected])
 
 
   return (
@@ -100,8 +126,12 @@ function App() {
         mode={mode}
         handleMode={handleMode}
         handleTodoBgChange={handleTodoBgChange}
-        handleDelete={handleDelete}
         handleDeleteAll={handleDeleteAll}
+        setRightBarShow={setRightBarShow}
+        setRightBarTitle={setRightBarTitle}
+        setRightBarContent={setRightBarContent}
+        setUpdatingCreating={setUpdatingCreating}
+        deleteSelected={deleteSelected}
       />
       {
         todos.length === 0 
@@ -110,6 +140,18 @@ function App() {
         :
         <div className="relative h-screen w-full flex flex-wrap gap-[10px] p-[25px] md:p-[100px] overflow-y-scroll">{stickyNoteElements}</div>
       }
+      <RightBar 
+        rightBarShow={rightBarShow}
+        newTodo={newTodo}
+        rightBarTitle={rightBarTitle}
+        setRightBarShow={setRightBarShow}
+        setRightBarTitle={setRightBarTitle}
+        rightBarContent={rightBarContent}
+        setRightBarContent={setRightBarContent}
+        updatingCreating={updatingCreating}
+        update={update}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }

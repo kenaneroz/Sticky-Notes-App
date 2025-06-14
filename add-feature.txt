@@ -1,3 +1,5 @@
 drag and drop
+multiple selection and then delete feature
+update its date after updating a note
 Todos gap problem
 Enhance the design
