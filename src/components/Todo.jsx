@@ -25,7 +25,6 @@ export default function Todo(props) {
                         className="cursor-pointer" 
                         onClick={() => {
                             props.pin(props.todo.id)
-                            props.setRightBarShow(false)
                         }} 
                     />
                 </div>

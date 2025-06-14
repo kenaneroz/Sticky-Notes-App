@@ -136,7 +136,7 @@ function App() {
       {
         todos.length === 0 
         ?
-        <p className='h-screen w-full flex justify-center items-center'>You haven't added anything yet.</p>
+        <p className='text-gray-100 h-screen w-full flex justify-center items-center'>You haven't added anything yet.</p>
         :
         <div className="relative h-screen w-full flex flex-wrap gap-[10px] p-[25px] md:p-[100px] overflow-y-scroll">{stickyNoteElements}</div>
       }
