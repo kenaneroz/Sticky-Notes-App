@@ -13,19 +13,20 @@ export default function Todo(props) {
         >
             <div 
                 className="flex flex-col"
-                onClick={() => props.handleSelect(props.todo.id)}
             >
                 <p className="resize-none overflow-hidden text-2xl font-semibold outline-none">{props.todo.title}</p>
                 <p className="resize-none overflow-hidden outline-none">{props.todo.content}</p>
             </div>
             <div 
                 className="flex justify-between items-end pt-[25px]"
-                onClick={() => props.handleSelect(props.todo.id)}
             >
                 <div className="flex items-center gap-x-[5px]">
                     <GiPin 
                         className="cursor-pointer" 
-                        onClick={() => props.pin(props.todo.id)} 
+                        onClick={() => {
+                            props.pin(props.todo.id)
+                            props.setRightBarShow(false)
+                        }} 
                     />
                 </div>
                 <p className="cursor-default text-sm">{props.todo.date}</p>

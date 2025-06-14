@@ -57,19 +57,19 @@ function App() {
 
   const [selected, setSelected] = useState('')
   function handleSelect(id) {
-    setSelected(id)
-    todos.map(todo => {
-      if(todo.id === id) {
-        setRightBarTitle(todo.title)
-        setRightBarContent(todo.content)
-      }
-    })
+    if(selected === id) {
+      setRightBarShow(prev => !prev)
+    } else {
+      setRightBarShow(true)
+      setSelected(id)
+      todos.map(todo => {
+        if(todo.id === id) {
+          setRightBarTitle(todo.title)
+          setRightBarContent(todo.content)
+        }
+      })
+    }
     setUpdatingCreating('editing')
-    setRightBarShow(prev => {
-      const showing = !prev
-      setSelected(showing ? id : '')
-      return showing
-    })
   }
 
 
@@ -88,6 +88,7 @@ function App() {
     setTodos(todos => todos.filter(todo => !todo.isSelected))
   }
 
+  const [rightBarShow, setRightBarShow] = useState(false)
   const stickyNoteElements = todos.map(todo => {
     return <Todo
       key={todo.id}
@@ -96,6 +97,7 @@ function App() {
       handleDelete={handleDelete} 
       handleSelect={handleSelect}
       selected={selected}
+      setRightBarShow={setRightBarShow}
     />  
   })
 
@@ -105,7 +107,6 @@ function App() {
     else setMode('light')
   }
   
-  const [rightBarShow, setRightBarShow] = useState(false)
   const [rightBarTitle, setRightBarTitle] = useState('Title')
   const [rightBarContent, setRightBarContent] = useState('Content')
 
@@ -121,17 +122,16 @@ function App() {
     <div className={`${mode === 'dark' ? 'bg-gray-700' : 'bg-gray-100'} md:flex`}>
       <Sidebar 
         newTodo={newTodo} 
-        bg={bg} 
-        setBg={setBg} 
         mode={mode}
         handleMode={handleMode}
-        handleTodoBgChange={handleTodoBgChange}
         handleDeleteAll={handleDeleteAll}
         setRightBarShow={setRightBarShow}
         setRightBarTitle={setRightBarTitle}
         setRightBarContent={setRightBarContent}
         setUpdatingCreating={setUpdatingCreating}
         deleteSelected={deleteSelected}
+        selected={selected}
+        setSelected={setSelected}
       />
       {
         todos.length === 0 
@@ -151,6 +151,9 @@ function App() {
         updatingCreating={updatingCreating}
         update={update}
         handleDelete={handleDelete}
+        setBg={setBg} 
+        bg={bg} 
+        handleTodoBgChange={handleTodoBgChange}
       />
     </div>
   )
